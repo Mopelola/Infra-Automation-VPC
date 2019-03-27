@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.10.3" # introduction of Local Values configuration language feature
+  required_version = ">= 0.11.11" # introduction of Local Values configuration language feature
 }
 
 locals {
@@ -426,7 +426,7 @@ resource "aws_key_pair" "mykey1" {
 }
 
 resource "aws_instance" "capacitybay-webtier-1" {
-  ami = "ami-bc784ed9"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -438,7 +438,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-application-1" {
-  ami = "ami-bc784ed9"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -450,7 +450,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-DB-1" {
-  ami = "ami-bc784ed9"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -462,7 +462,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-ad-1" {
-  ami = "ami-bc784ed9"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -475,7 +475,7 @@ tags {
 
 
 resource "aws_instance" "capacitybay-webtier-2" {
-  ami = "ami-bc784ed9"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -487,7 +487,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-application-2" {
-  ami = "ami-bc784ed9"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -499,7 +499,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-DB-2" {
-  ami = "ami-bc784ed9"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -511,7 +511,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-ad-2" {
-  ami = "ami-bc784ed9"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -523,7 +523,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-bastion" {
-  ami = "ami-bc784ed9"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"

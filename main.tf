@@ -449,7 +449,7 @@ tags {
   }
 }
 
-resource "aws_instance" "capacitybay-DB-1" {
+resource "aws_instance" "capacitybay-db-1" {
   ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
@@ -496,9 +496,8 @@ resource "aws_instance" "capacitybay-application-2" {
 tags {
     Name = "capacitybay-application-2-AZ2"
   }
-}
 
-resource "aws_instance" "capacitybay-DB-2" {
+resource "aws_instance" "capacitybay-db-2" {
   ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]

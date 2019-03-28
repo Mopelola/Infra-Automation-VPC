@@ -39,7 +39,7 @@ output "capacitybay_adinstance_AZ2_private_ip" {
 }
 output "capacitybay_bastion_public_ip" {
   description = "This is the capacitybay Bastion Public IP"
-  value       = "${module.vpc.capacitybay_bastion_rdp_public_ip}"
+  value       = "${module.vpc.capacitybay_bastion_public_ip}"
 }
 
 

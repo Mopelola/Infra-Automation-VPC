@@ -7,7 +7,7 @@ Usage
 To run this example you need to execute:
 
 ```bash
-$ cd Infra-Automation-VPC
+$ cd Infra-Automation-VPC/project/complete-vpc
 ```
 
 Configure AWSCLI:

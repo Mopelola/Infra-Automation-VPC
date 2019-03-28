@@ -284,6 +284,6 @@ output "capacitybay_adinstance_AZ2_private_ip" {
 }
 output "capacitybay_bastion_public_ip" {
   description = "This is the capacitybay Bastion Public IP"
-  value       = "${aws_instance.capacitybay-bastion-rdp.public_ip}"
+  value       = "${aws_instance.capacitybay-bastion.public_ip}"
 }
 

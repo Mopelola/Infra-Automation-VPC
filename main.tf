@@ -380,7 +380,7 @@ resource "aws_main_route_table_association" "this" {
   route_table_id = "${aws_default_route_table.this.default_route_table_id}"
 }
 
-resource "aws_security_group" "capacity-secgrp" {
+resource "aws_security_group" "capacitybay-secgrp" {
  name = "capacitybay-secgrp"
  vpc_id = "${aws_vpc.this.id}"
 

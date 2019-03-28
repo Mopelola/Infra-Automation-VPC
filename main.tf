@@ -496,6 +496,7 @@ resource "aws_instance" "capacitybay-application-2" {
 tags {
     Name = "capacitybay-application-2-AZ2"
   }
+}
 
 resource "aws_instance" "capacitybay-db-2" {
   ami = "ami-0080e4c5bc078760e"

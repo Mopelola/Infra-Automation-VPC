@@ -15,7 +15,7 @@ module "vpc" {
   #redshift_subnets    = ["10.10.41.0/24", "10.10.42.0/24", "10.10.43.0/24"]
   
   #private_subnet_1 = "${module.vpc.aws_subnet.private[0].id,0}"
-
+  AMIS = "ami-02bcbb802e03574ba"
   create_database_subnet_group = false
 
   enable_nat_gateway = true

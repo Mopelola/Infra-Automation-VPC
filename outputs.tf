@@ -274,14 +274,14 @@ output "capacitybay_dbinstance_AZ2_private_ip" {
   description = "This is the capacitybay dbinstance 2 Private IP"
   value       = "${aws_instance.capacitybay-db-2.private_ip}"
 }
-output "capacitybay_adinstance_AZ1_private_ip" {
-  description = "This is the capacitybay AD instance 1 Private IP"
-  value       = "${aws_instance.capacitybay-ad-1.private_ip}"
-}
-output "capacitybay_adinstance_AZ2_private_ip" {
-  description = "This is the capacitybay AD instance 2 Private IP"
-  value       = "${aws_instance.capacitybay-ad-2.private_ip}"
-}
+#output "capacitybay_adinstance_AZ1_private_ip" {
+#  description = "This is the capacitybay AD instance 1 Private IP"
+#  value       = "${aws_instance.capacitybay-ad-1.private_ip}"
+#}
+#output "capacitybay_adinstance_AZ2_private_ip" {
+#  description = "This is the capacitybay AD instance 2 Private IP"
+#  value       = "${aws_instance.capacitybay-ad-2.private_ip}"
+#}
 output "capacitybay_bastion_public_ip" {
   description = "This is the capacitybay Bastion Public IP"
   value       = "${aws_instance.capacitybay-bastion.public_ip}"

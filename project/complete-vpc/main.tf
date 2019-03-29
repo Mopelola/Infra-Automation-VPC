@@ -16,6 +16,10 @@ module "vpc" {
   
   #private_subnet_1 = "${module.vpc.aws_subnet.private[0].id,0}"
   AMIS = "ami-02bcbb802e03574ba"
+  webserver_AMIS = "ami-02bcbb802e03574ba"
+  appserver_AMIS = "ami-02bcbb802e03574ba"
+  dbserver_AMIS = "ami-02bcbb802e03574ba"
+  bastionserver_AMIS = "ami-02bcbb802e03574ba"
   create_database_subnet_group = false
 
   enable_nat_gateway = true

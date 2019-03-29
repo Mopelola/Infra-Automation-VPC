@@ -243,14 +243,23 @@ variable "default_vpc_tags" {
 variable "AWS_REGION" {
   default = "us-east-2"
 }
-variable "AMIS" {
-  type = "map"
-  default = {
-    us-east-2 = "ami-02bcbb802e03574ba"
-  }
+variable "webserver_AMIS" {
+  default = ""
 }
 
+variable "appserver_AMIS" {
+  default = ""
+}
 
+variable "dbserver_AMIS" {
+  default = ""
+}
+variable "bastionserver_AMIS" {
+  default = ""
+}
+variable "AMIS" {
+  default = ""
+}
 variable "private_subnet_1" {
   description = "private_subnet_1 to be used"
   default     = ""

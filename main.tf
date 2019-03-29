@@ -426,7 +426,7 @@ resource "aws_key_pair" "mykey1" {
 }
 
 resource "aws_instance" "capacitybay-webtier-1" {
-  ami = "ami-02bcbb802e03574ba"
+  ami = "${var.webserver_AMIS}"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -438,7 +438,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-application-1" {
-  ami = "${var.AMIS}"
+  ami = "${var.appserver_AMIS}"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -450,7 +450,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-db-1" {
-  ami = "${var.AMIS}"
+  ami = "${var.dbserver_AMIS}"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -461,21 +461,9 @@ tags {
   }
 }
 
-resource "aws_instance" "capacitybay-ad-1" {
-  ami = "${var.AMIS}"
-  instance_type = "t2.micro"
-  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
-  key_name = "${aws_key_pair.mykey1.key_name}"
-  count = 1
-  subnet_id      = "${element(aws_subnet.private.*.id, count.index)}"
-tags {
-    Name = "capacitybay-ad-1-AZ1"
-  }
-}
-
 
 resource "aws_instance" "capacitybay-webtier-2" {
-  ami = "${var.AMIS}"
+  ami = "${var.webserver_AMIS}"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -487,7 +475,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-application-2" {
-  ami = "${var.AMIS}"
+  ami = "${var.appserver_AMIS}"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -499,7 +487,7 @@ tags {
 }
 
 resource "aws_instance" "capacitybay-db-2" {
-  ami = "${var.AMIS}"
+  ami = "${var.dbserver_AMIS}"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
@@ -510,20 +498,8 @@ tags {
   }
 }
 
-resource "aws_instance" "capacitybay-ad-2" {
-  ami = "${var.AMIS}"
-  instance_type = "t2.micro"
-  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
-  key_name = "${aws_key_pair.mykey1.key_name}"
-  count = 1
-  subnet_id      = "${element(aws_subnet.private.*.id, count.index + 1)}"
-tags {
-    Name = "capacitybay-ad-2-AZ2"
-  }
-}
-
 resource "aws_instance" "capacitybay-bastion" {
-  ami = "${var.AMIS}"
+  ami = "${var.bastionserver_AMIS}"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"

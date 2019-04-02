@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "terraform-infra-code-version1"
+    bucket = "terraform-infra-code-anu-version"
     key = "Rome"
   }
 }

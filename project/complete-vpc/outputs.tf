@@ -1,23 +1,23 @@
 # VPC
-output "vpc_id" {
+output "MGMT-vpc_id" {
   description = "The ID of the VPC"
   value       = "${module.MGMT-VPC.vpc_id}"
 }
 
 # VPC
-output "vpc_id" {
+output "DEV-vpc_id" {
   description = "The ID of the VPC"
   value       = "${module.DEV-VPC.vpc_id}"
 }
 
 # VPC
-output "vpc_id" {
+output "UAT-vpc_id" {
   description = "The ID of the VPC"
   value       = "${module.UAT-VPC.vpc_id}"
 }
 
 # VPC
-output "vpc_id" {
+output "PROD-vpc_id" {
   description = "The ID of the VPC"
   value       = "${module.PROD-VPC.vpc_id}"
 }

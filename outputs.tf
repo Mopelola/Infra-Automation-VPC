@@ -4,6 +4,7 @@ output "vpc_id" {
   value       = "${element(concat(aws_vpc.this.*.id, list("")), 0)}"
 }
 
+/*
 output "vpc_cidr_block" {
   description = "The CIDR block of the VPC"
   value       = "${element(concat(aws_vpc.this.*.cidr_block, list("")), 0)}"
@@ -286,4 +287,4 @@ output "capacitybay_bastion_public_ip" {
   description = "This is the capacitybay Bastion Public IP"
   value       = "${aws_instance.capacitybay-bastion.public_ip}"
 }
-
+*/

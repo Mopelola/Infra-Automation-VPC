@@ -1,9 +1,28 @@
 # VPC
 output "vpc_id" {
   description = "The ID of the VPC"
-  value       = "${module.vpc.vpc_id}"
+  value       = "${module.MGMT-VPC.vpc_id}"
 }
 
+# VPC
+output "vpc_id" {
+  description = "The ID of the VPC"
+  value       = "${module.DEV-VPC.vpc_id}"
+}
+
+# VPC
+output "vpc_id" {
+  description = "The ID of the VPC"
+  value       = "${module.UAT-VPC.vpc_id}"
+}
+
+# VPC
+output "vpc_id" {
+  description = "The ID of the VPC"
+  value       = "${module.PROD-VPC.vpc_id}"
+}
+
+/*
 #INSTANCES
 output "capacitybay_webinstance_AZ1_private_ip" {
   description = "This is the capacitybay webinstance 1 Private IP"
@@ -74,3 +93,6 @@ output "nat_public_ips" {
   description = "List of public Elastic IPs created for AWS NAT Gateway"
   value       = ["${module.vpc.nat_public_ips}"]
 }
+
+
+*/

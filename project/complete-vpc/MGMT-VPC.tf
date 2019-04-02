@@ -1,10 +1,6 @@
-provider "aws" {
-  region = "us-east-2"
-}
-
-module "vpc" {
+module "MGMT-VPC" {
   source = "../../"
-  name = "myorg"
+  name = "mgmt-vpc"
   cidr = "10.10.0.0/16"
 
   azs                 = ["us-east-2a", "us-east-2b", "us-east-2c"]
@@ -13,8 +9,8 @@ module "vpc" {
   database_subnets    = ["10.10.21.0/24", "10.10.22.0/24", "10.10.23.0/24"]
   #elasticache_subnets = ["10.10.31.0/24", "10.10.32.0/24", "10.10.33.0/24"]
   #redshift_subnets    = ["10.10.41.0/24", "10.10.42.0/24", "10.10.43.0/24"]
-  
-  #private_subnet_1 = "${module.vpc.aws_subnet.private[0].id,0}"
+
+  #private_subnet_1 = "${module.MGMT-VPC.aws_subnet.private[0].id,0}"
   AMIS = "ami-02bcbb802e03574ba"
   webserver_AMIS = "ami-02bcbb802e03574ba"
   appserver_AMIS = "ami-02bcbb802e03574ba"
@@ -38,4 +34,3 @@ module "vpc" {
     Name        = "complete"
   }
 }
-

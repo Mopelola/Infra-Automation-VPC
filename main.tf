@@ -425,6 +425,7 @@ resource "aws_key_pair" "mykey1" {
   public_key = "${file("mykey1.pub")}"
 }
 
+/*
 resource "aws_instance" "capacitybay-webtier-1" {
   ami = "${var.webserver_AMIS}"
   instance_type = "t2.micro"
@@ -510,3 +511,4 @@ tags {
   }
 }
 
+*/

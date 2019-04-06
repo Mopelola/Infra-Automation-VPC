@@ -188,6 +188,9 @@ resource "aws_db_subnet_group" "database" {
 #  subnet_ids  = ["${aws_subnet.elasticache.*.id}"]
 #}
 
+
+
+/*
 ##############
 # NAT Gateway
 ##############
@@ -221,6 +224,10 @@ resource "aws_route" "private_nat_gateway" {
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = "${element(aws_nat_gateway.this.*.id, count.index)}"
 }
+
+*/
+
+
 
 ######################
 # VPC Endpoint for S3
@@ -421,8 +428,8 @@ tags {
 }
 
 resource "aws_key_pair" "mykey1" {
-  key_name = "mykey1"
-  public_key = "${file("mykey1.pub")}"
+  key_name = "${var.name}"
+  public_key = "${file("${var.name}-key.pub")}"
 }
 
 /*

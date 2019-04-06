@@ -264,3 +264,7 @@ variable "private_subnet_1" {
   description = "private_subnet_1 to be used"
   default     = ""
 }
+variable "key_pair" {
+  description = "key_pair to be used"
+  default     = ""
+}

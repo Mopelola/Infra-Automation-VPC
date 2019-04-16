@@ -20,14 +20,14 @@ module "MGMT-VPC" {
   jenkinsserver_AMIS = "ami-0b500ef59d8335eee"
   nexusserver_AMIS = "ami-0b500ef59d8335eee"
   sonarqubeserver_AMIS = "ami-0b500ef59d8335eee"
-  proxyserver_AMIS = "ami-0e7589a8422e3270f"
+  proxyserver_AMIS = "ami-0c55b159cbfafe1f0"
 
   create_database_subnet_group = false
   enable_bastion = false
   enable_jenkins = false
   enable_nexus = false
   enable_sonarqube = false
-  enable_proxy = false
+  enable_proxy = true
 
   enable_nat_gateway = true
   enable_vpn_gateway = true

@@ -398,8 +398,8 @@ resource "aws_security_group" "capacitybay-secgrp" {
     cidr_blocks = [ "0.0.0.0/0" ]
   }
   ingress {
-    from_port = "3389"
-    to_port = "3389"
+    from_port = "8080"
+    to_port = "8080"
     protocol = "tcp"
     cidr_blocks = [ "0.0.0.0/0" ]
   }
@@ -611,8 +611,14 @@ resource "aws_instance" "capacitybay-proxy" {
   key_name = "${aws_key_pair.mykey1.key_name}"
   count = "${var.enable_proxy}"
   subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get update",
+      "sudo apt-get install python -y",
+    ]
+  }
   provisioner "local-exec" {
-     command = "sleep 120 && sudo apt-get update && sudo apt-get install python -y && echo \"[proxy-server]\n${aws_instance.capacitybay-proxy.public_ip} ansible_connection=ssh ansible_ssh_user=ubuntu ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > proxy-inventory && ansible-playbook -i proxy-inventory ansible-playbooks/proxy-create.yml"
+     command = "sleep 120 && echo \"[proxy-server]\n${aws_instance.capacitybay-proxy.public_ip} ansible_connection=ssh ansible_ssh_user=ubuntu ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > proxy-inventory && ansible-playbook -i proxy-inventory ansible-playbooks/proxy-create.yml"
   }
 
   connection {

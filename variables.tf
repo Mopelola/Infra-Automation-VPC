@@ -257,6 +257,19 @@ variable "dbserver_AMIS" {
 variable "bastionserver_AMIS" {
   default = ""
 }
+variable "jenkinsserver_AMIS" {
+  default = ""
+}
+variable "nexusserver_AMIS" {
+  default = ""
+}
+variable "sonarqubeserver_AMIS" {
+  default = ""
+}
+variable "proxyserver_AMIS" {
+  default = ""
+}
+
 variable "AMIS" {
   default = ""
 }
@@ -267,4 +280,29 @@ variable "private_subnet_1" {
 variable "key_pair" {
   description = "key_pair to be used"
   default     = ""
+}
+
+variable "enable_bastion" {
+  description = "Should be true if you want to create a bastion server"
+  default     = false
+}
+variable "enable_jenkins" {
+  description = "Should be true if you want to create a jenkins server"
+  default     = false
+}
+variable "enable_nexus" {
+  description = "Should be true if you want to create a nexus server"
+  default     = false
+}
+variable "enable_sonarqube" {
+  description = "Should be true if you want to create a sonarqube server"
+  default     = false
+}
+variable "enable_artifactory" {
+  description = "Should be true if you want to create a artifactory server"
+  default     = false
+}
+variable "enable_proxy" {
+  description = "Should be true if you want to create a proxy server"
+  default     = false
 }

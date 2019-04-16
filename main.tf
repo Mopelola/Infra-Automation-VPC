@@ -506,16 +506,121 @@ tags {
   }
 }
 
+*/
+
 resource "aws_instance" "capacitybay-bastion" {
   ami = "${var.bastionserver_AMIS}"
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
-  count = 1
+  count = "${var.enable_bastion}"
   subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
 tags {
     Name = "capacitybay-bastion"
   }
 }
 
+
+resource "aws_instance" "capacitybay-jenkins" {
+  ami = "${var.jenkinsserver_AMIS}"
+  instance_type = "t2.medium"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = "${var.enable_jenkins}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+tags {
+    Name = "capacitybay-jenkins"
+  }
+  provisioner "local-exec" {
+     command = "sleep 120 && echo \"[jenkins-server]\n${aws_instance.capacitybay-jenkins.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > jenkins-inventory &&  ansible-playbook -i jenkins-inventory ansible-playbooks/jenkins-create.yml "
+  }
+  connection {
+    user = "ec2-user"
+    private_key = "${file("mgmt-vpc-key")}"
+  }
+}
+
+
+resource "aws_instance" "capacitybay-nexus" {
+  ami = "${var.nexusserver_AMIS}"
+  instance_type = "t2.medium"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = "${var.enable_nexus}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+  provisioner "local-exec" {
+     command = "sleep 120 && echo \"[nexus-server]\n${aws_instance.capacitybay-nexus.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > nexus-inventory &&  ansible-playbook -i nexus-inventory ansible-playbooks/nexus-create.yml"
+  }
+
+  connection {
+    user = "ec2-user"
+    private_key = "${file("mgmt-vpc-key")}"
+  }
+tags {
+    Name = "capacitybay-nexus"
+  }
+}
+
+resource "aws_instance" "capacitybay-sonarqube" {
+  ami = "${var.sonarqubeserver_AMIS}"
+  instance_type = "t2.medium"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = "${var.enable_sonarqube}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+  provisioner "local-exec" {
+     command = "sleep 120 && echo \"[sonarqube-server]\n${aws_instance.capacitybay-sonarqube.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > sonarqube-inventory && ansible-playbook -i sonarqube-inventory ansible-playbooks/sonarqube-create.yml"
+  }
+
+  connection {
+    user = "ec2-user"
+    private_key = "${file("mgmt-vpc-key")}"
+  }
+tags {
+    Name = "capacitybay-sonarqube"
+  }
+}
+
+
+/*
+resource "aws_instance" "capacitybay-artifactory" {
+  ami = "${var.artifactoryserver_AMIS}"
+  instance_type = "t2.medium"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = 1      
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+  provisioner "local-exec" {
+     command = "sleep 120 && echo \"[artifactory-server]\n${aws_instance.capacitybay-artifactory.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=project/complete-vpc/mykey1 host_key_checking=False\" > artifactory-inventory &&  ansible-playbook -i artifactory-inventory ansible-playbooks/artifactory-create.yml"
+  }
+
+  connection {
+    user = "ec2-user"
+    private_key = "${file("project/complete-vpc/mykey1")}"
+  }
+tags {
+    Name = "capacitybay-artifactory"
+  }
+}
 */
+
+resource "aws_instance" "capacitybay-proxy" {
+  ami = "${var.proxyserver_AMIS}"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = "${var.enable_proxy}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+  provisioner "local-exec" {
+     command = "sleep 120 && sudo apt-get update && sudo apt-get install python -y && echo \"[proxy-server]\n${aws_instance.capacitybay-proxy.public_ip} ansible_connection=ssh ansible_ssh_user=ubuntu ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > proxy-inventory && ansible-playbook -i proxy-inventory ansible-playbooks/proxy-create.yml"
+  }
+
+  connection {
+    user = "ubuntu"
+    private_key = "${file("mgmt-vpc-key")}"
+  }
+tags {
+    Name = "capacitybay-proxy"
+  }
+}
+

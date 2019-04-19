@@ -269,6 +269,18 @@ variable "sonarqubeserver_AMIS" {
 variable "proxyserver_AMIS" {
   default = ""
 }
+variable "artifactoryserver_AMIS" {
+  default = ""
+}
+variable "openvpnserver_AMIS" {
+  default = ""
+}
+variable "splunkserver_AMIS" {
+  default = ""
+}
+variable "elkserver_AMIS" {
+  default = ""
+}
 
 variable "AMIS" {
   default = ""
@@ -304,5 +316,17 @@ variable "enable_artifactory" {
 }
 variable "enable_proxy" {
   description = "Should be true if you want to create a proxy server"
+  default     = false
+}
+variable "enable_openvpn" {
+  description = "Should be true if you want to create a proxy server"
+  default     = false
+}
+variable "enable_splunk" {
+  description = "Should be true if you want to create a artifactory server"
+  default     = false
+}
+variable "enable_elk" {
+  description = "Should be true if you want to create a artifactory server"
   default     = false
 }

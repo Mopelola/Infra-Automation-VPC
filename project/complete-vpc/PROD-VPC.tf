@@ -18,8 +18,8 @@ module "PROD-VPC" {
   bastionserver_AMIS = "ami-02bcbb802e03574ba"
   create_database_subnet_group = false
 
-  enable_nat_gateway = true
-  enable_vpn_gateway = true
+  enable_nat_gateway = false
+  enable_vpn_gateway = false
 
   enable_s3_endpoint       = true
   #enable_dynamodb_endpoint = true

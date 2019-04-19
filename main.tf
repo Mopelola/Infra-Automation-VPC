@@ -190,7 +190,7 @@ resource "aws_db_subnet_group" "database" {
 
 
 
-/*
+
 ##############
 # NAT Gateway
 ##############
@@ -225,7 +225,6 @@ resource "aws_route" "private_nat_gateway" {
   nat_gateway_id         = "${element(aws_nat_gateway.this.*.id, count.index)}"
 }
 
-*/
 
 
 
@@ -581,28 +580,26 @@ tags {
   }
 }
 
-
-/*
 resource "aws_instance" "capacitybay-artifactory" {
   ami = "${var.artifactoryserver_AMIS}"
   instance_type = "t2.medium"
   vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
-  count = 1      
+  count = "${var.enable_artifactory}"    
   subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
   provisioner "local-exec" {
-     command = "sleep 120 && echo \"[artifactory-server]\n${aws_instance.capacitybay-artifactory.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=project/complete-vpc/mykey1 host_key_checking=False\" > artifactory-inventory &&  ansible-playbook -i artifactory-inventory ansible-playbooks/artifactory-create.yml"
+     command = "sleep 120 && echo \"[artifactory-server]\n${aws_instance.capacitybay-artifactory.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > artifactory-inventory && ansible-playbook -i artifactory-inventory ansible-playbooks/artifactory-create.yml"
   }
 
   connection {
     user = "ec2-user"
-    private_key = "${file("project/complete-vpc/mykey1")}"
+    private_key = "${file("mgmt-vpc-key")}"
   }
 tags {
     Name = "capacitybay-artifactory"
   }
 }
-*/
+
 
 resource "aws_instance" "capacitybay-proxy" {
   ami = "${var.proxyserver_AMIS}"
@@ -628,5 +625,78 @@ resource "aws_instance" "capacitybay-proxy" {
 tags {
     Name = "capacitybay-proxy"
   }
+}
+
+resource "aws_instance" "capacitybay-openvpn" {
+  ami = "${var.openvpnserver_AMIS}"
+  instance_type = "t2.small"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = "${var.enable_openvpn}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+tags {
+    Name = "capacitybay-openvpn"
+  }
+}
+
+resource "aws_instance" "capacitybay-splunk" {
+  ami = "${var.splunkserver_AMIS}"
+  instance_type = "t2.medium"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = "${var.enable_splunk}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+  provisioner "local-exec" {
+     command = "sleep 120 && echo \"[splunk-server]\n${aws_instance.capacitybay-nexus.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > splunk-inventory &&  ansible-playbook -i splunk-inventory ansible-playbooks/splunk-create.yml"
+  }
+
+  connection {
+    user = "ec2-user"
+    private_key = "${file("mgmt-vpc-key")}"
+  }
+tags {
+    Name = "capacitybay-splunk"
+  }
+}
+
+resource "aws_instance" "capacitybay-elk" {
+  ami = "${var.elkserver_AMIS}"
+  instance_type = "t2.medium"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" 
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = "${var.enable_elk}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+   provisioner "local-exec" {
+     command = "sleep 120 && echo \"[elk]\n${aws_instance.capacitybay-elk.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > elk-inventory &&  ansible-playbook -i elk-inventory ansible-playbooks/elk-automation/install/elk.yml"
+  }
+
+  connection {
+    user = "ec2-user"
+    private_key = "${file("mgmt-vpc-key")}"
+  }
+tags {
+    Name = "capacitybay-elk-master"
+  }
+}
+
+resource "aws_instance" "capacitybay-elk-client" {
+  ami = "${var.elkserver_AMIS}"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" 
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = "${var.enable_elk}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+   provisioner "local-exec" {
+     command = "sleep 120 && echo \"[elk-client]\n${aws_instance.capacitybay-elk-client.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > elk-client-inventory &&  ansible-playbook -i elk-client-inventory ansible-playbooks/elk-automation/install/elk-client.yml --extra-vars 'elk_server=${aws_instance.capacitybay-elk.public_ip}'"
+  }
+
+  connection {
+    user = "ec2-user"
+    private_key = "${file("mgmt-vpc-key")}"
+  }
+tags {
+    Name = "capacitybay-elk-client"
+  }
+
 }
 

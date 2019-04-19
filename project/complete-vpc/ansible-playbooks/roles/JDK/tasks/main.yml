@@ -6,15 +6,16 @@
 - name: Download JAVA JDK 8 
   get_url: 
     #url: http://download.oracle.com/otn/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.tar.gz 
-    url: https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jdk-8u201-linux-x64.tar.gz 
-    dest: /opt/jdk-8u201-linux-x64.tar.gz
+    #url: https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jdk-8u201-linux-x64.tar.gz 
+    url: https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz
+    dest: /opt/jdk-8u211-linux-x64.tar.gz
     headers: 'Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie'
 
 - name: JDK 8 Extract archive
-  command: chdir=/usr/share /bin/tar xvf /opt/jdk-8u201-linux-x64.tar.gz -C /opt/ creates=/opt/jdk1.8.0_201
+  command: chdir=/usr/share /bin/tar xvf /opt/jdk-8u211-linux-x64.tar.gz -C /opt/ creates=/opt/jdk1.8.0_211
 
 - name: JDK 8 Symlink install directory
-  file: src=/opt/jdk1.8.0_201 path=/opt/java state=link
+  file: src=/opt/jdk1.8.0_211 path=/opt/java state=link
 
 - name: JDK 8 correct java version selected
   alternatives:

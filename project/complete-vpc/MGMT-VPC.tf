@@ -19,18 +19,26 @@ module "MGMT-VPC" {
   bastionserver_AMIS = "ami-02bcbb802e03574ba"
   jenkinsserver_AMIS = "ami-0b500ef59d8335eee"
   nexusserver_AMIS = "ami-0b500ef59d8335eee"
+  artifactoryserver_AMIS = "ami-0b500ef59d8335eee"
+  splunkserver_AMIS = "ami-0b500ef59d8335eee"
+  elkserver_AMIS = "ami-0b500ef59d8335eee"
   sonarqubeserver_AMIS = "ami-0b500ef59d8335eee"
   proxyserver_AMIS = "ami-0c55b159cbfafe1f0"
+  openvpnserver_AMIS = "ami-0352afdfcf90ad1b5"
 
   create_database_subnet_group = false
   enable_bastion = false
   enable_jenkins = false
   enable_nexus = false
+  enable_artifactory = false
   enable_sonarqube = false
-  enable_proxy = true
+  enable_splunk = false
+  enable_elk = false
+  enable_proxy = false
+  enable_openvpn = false
 
   enable_nat_gateway = true
-  enable_vpn_gateway = true
+  enable_vpn_gateway = false
 
   enable_s3_endpoint       = true
   #enable_dynamodb_endpoint = true

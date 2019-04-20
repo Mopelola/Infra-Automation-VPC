@@ -662,7 +662,7 @@ tags {
 resource "aws_instance" "capacitybay-elk" {
   ami = "${var.elkserver_AMIS}"
   instance_type = "t2.medium"
-  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" 
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
   count = "${var.enable_elk}"
   subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
@@ -682,7 +682,7 @@ tags {
 resource "aws_instance" "capacitybay-elk-client" {
   ami = "${var.elkserver_AMIS}"
   instance_type = "t2.micro"
-  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" 
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
   key_name = "${aws_key_pair.mykey1.key_name}"
   count = "${var.enable_elk}"
   subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
@@ -698,5 +698,23 @@ tags {
     Name = "capacitybay-elk-client"
   }
 
+}
+
+resource "aws_instance" "capacitybay-icinga" {
+  ami = "${var.icingaserver_AMIS}"
+  instance_type = "t2.medium"
+  vpc_security_group_ids = [ "${aws_security_group.capacitybay-secgrp.id}" ]
+  key_name = "${aws_key_pair.mykey1.key_name}"
+  count = "${var.enable_icinga}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+
+   provisioner "local-exec" {
+     command = "sleep 120 && echo \"[monitoring_servers]\n${aws_instance.capacitybay-icinga.public_ip} ansible_connection=ssh ansible_ssh_user=ec2-user ansible_ssh_private_key_file=mgmt-vpc-key ansible_ssh_common_args='-o StrictHostKeyChecking=no'\" > icinga-inventory &&  ansible-playbook -i icinga-inventory ansible-playbooks/icinga-automation/icinga-playbooks/site-icinga.yml"
+  }
+
+  connection {
+    user = "ec2-user"
+    private_key = "${file("mgmt-vpc-key")}"
+  }
 }
 

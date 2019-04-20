@@ -23,6 +23,7 @@ module "MGMT-VPC" {
   splunkserver_AMIS = "ami-0b500ef59d8335eee"
   elkserver_AMIS = "ami-0b500ef59d8335eee"
   sonarqubeserver_AMIS = "ami-0b500ef59d8335eee"
+  icingaserver_AMIS = "ami-0b500ef59d8335eee"
   proxyserver_AMIS = "ami-0c55b159cbfafe1f0"
   openvpnserver_AMIS = "ami-0352afdfcf90ad1b5"
 
@@ -36,6 +37,7 @@ module "MGMT-VPC" {
   enable_elk = false
   enable_proxy = false
   enable_openvpn = false
+  enable_icinga = false
 
   enable_nat_gateway = true
   enable_vpn_gateway = false

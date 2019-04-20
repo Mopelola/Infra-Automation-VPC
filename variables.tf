@@ -281,6 +281,9 @@ variable "splunkserver_AMIS" {
 variable "elkserver_AMIS" {
   default = ""
 }
+variable "icingaserver_AMIS" {
+  default = ""
+}
 
 variable "AMIS" {
   default = ""
@@ -327,6 +330,10 @@ variable "enable_splunk" {
   default     = false
 }
 variable "enable_elk" {
+  description = "Should be true if you want to create a artifactory server"
+  default     = false
+}
+variable "enable_icinga" {
   description = "Should be true if you want to create a artifactory server"
   default     = false
 }

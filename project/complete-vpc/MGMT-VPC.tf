@@ -28,14 +28,14 @@ module "MGMT-VPC" {
   openvpnserver_AMIS = "ami-0352afdfcf90ad1b5"
 
   create_database_subnet_group = false
-  enable_bastion = false
-  enable_jenkins = false
-  enable_nexus = false
+  enable_bastion = true 
+  enable_jenkins = true
+  enable_nexus = true
+  enable_sonarqube = true
+  enable_elk = true
+  enable_proxy = true
   enable_artifactory = false
-  enable_sonarqube = false
   enable_splunk = false
-  enable_elk = false
-  enable_proxy = false
   enable_openvpn = false
   enable_icinga = false
 

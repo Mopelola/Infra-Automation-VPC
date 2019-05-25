@@ -17,13 +17,13 @@
     dest: /opt/
 
 - name: Extract Nexus archive
-  command: chdir=/opt /bin/tar xvf /opt/nexus-3.16.0-01-unix.tar.gz -C /opt/ creates=/opt/nexus-3.16.0-01
+  command: chdir=/opt /bin/tar xvf /opt/nexus-3.16.1-02-unix.tar.gz -C /opt/ creates=/opt/nexus-3.16.1-02
 
 - name: Nexus symlink install directory 
-  file: src=/opt/nexus-3.16.0-01 path=/opt/nexus state=link
+  file: src=/opt/nexus-3.16.1-02 path=/opt/nexus state=link
 
 - name: Change ownership of Nexus installation
-  file: path=/opt/nexus-3.16.0-01 owner=nexus group=nexus state=directory recurse=yes
+  file: path=/opt/nexus-3.16.1-02 owner=nexus group=nexus state=directory recurse=yes
 
 - name: Change ownership of sonatype-work installation
   file: path=/opt/sonatype-work owner=nexus group=nexus state=directory recurse=yes
